@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: helloworld-no-iptables
+  namespace: helloworld-ns
+spec:
+  egress:
+  - bind: 127.0.0.2
+    hosts:
+    - ./*
+  ingress:
+  - defaultEndpoint: 127.0.0.1:5000
+    port:
+      name: http
+      number: 5000
+      protocol: HTTP
+  workloadSelector:
+    labels:
+      app: helloworld
+      class: vm
